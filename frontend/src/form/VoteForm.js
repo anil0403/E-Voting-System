@@ -32,7 +32,7 @@ const VoteForm = () => {
     setsocialNumber(event.target.value);
     axios({
       method: "get",
-      url: `http://localhost:3001/get-voter-by-socialNumber/${event.target.value}`,
+      url: `http://192.168.1.94:3001/get-voter-by-socialNumber/${event.target.value}`,
       responseType: "json",
     }).then((response) => {
       try {

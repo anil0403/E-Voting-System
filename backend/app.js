@@ -7,7 +7,7 @@ app.use(express.json());
 const crors = require("cors");
 app.use(
   crors({
-    origin: "http://localhost:3000",
+    origin: "http://192.168.1.94:3000",
   })
 );
 const port = process.argv[2];

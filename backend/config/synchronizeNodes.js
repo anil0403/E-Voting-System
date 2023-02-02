@@ -17,9 +17,9 @@ function SynchronizeNodes() {
   // ];
   // const endpoint = "/register-and-broadcast-node";
 
-  if (currentNodeUrl != "http://localhost:3001") {
+  if (currentNodeUrl != "http://192.168.1.94:3001") {
     const nodeRequestOption = {
-      uri: "http://localhost:3001" + "/register-and-broadcast-node",
+      uri: "http://10.5.1.187:3001" + "/register-and-broadcast-node",
       method: "post",
       body: {
         newNodeUrl: currentNodeUrl,

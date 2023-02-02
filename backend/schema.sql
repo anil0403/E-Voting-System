@@ -1,5 +1,7 @@
+create database testdb;
 use testdb;
--- desc testdb;
+desc testdb;
+
 
 CREATE TABLE category (
     id INT AUTO_INCREMENT PRIMARY KEY,
