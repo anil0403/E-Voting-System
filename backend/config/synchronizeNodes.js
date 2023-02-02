@@ -1,25 +1,17 @@
 const currentNodeUrl = process.argv[3];
-// const axios = require("axios");
+
 const { response } = require("express");
 const rp = require("request-promise");
 
 function SynchronizeNodes() {
-  // let nodes = [
-  //   "http://localhost:3001",
-  //   "http://localhost:3002",
-  //   "http://localhost:3003",
-  //   "http://localhost:3004",
-  //   "http://localhost:3005",
-  //   "http://localhost:3006",
-  //   "http://localhost:3007",
-  //   "http://localhost:3008",
-  //   "http://localhost:3009",
-  // ];
-  // const endpoint = "/register-and-broadcast-node";
+  let nodes = [
+    "http://192.168.1.94:3001",
+    "http://192.168.1.100:3002"
+  ];
 
-  if (currentNodeUrl != "http://192.168.1.94:3001") {
+  nodes.forEach(item => {
     const nodeRequestOption = {
-      uri: "http://10.5.1.187:3001" + "/register-and-broadcast-node",
+      uri: item + "/register-and-broadcast-node",
       method: "post",
       body: {
         newNodeUrl: currentNodeUrl,
@@ -42,16 +34,41 @@ function SynchronizeNodes() {
       });
       console.log(response);
     });
-  }
+  })
+
+
+
+
+
+
+
+
+  // if (currentNodeUrl != "http://192.168.1.94:3001") {
+  //   const nodeRequestOption = {
+  //     uri: "http://192.168.1.94:3001" + "/register-and-broadcast-node",
+  //     method: "post",
+  //     body: {
+  //       newNodeUrl: currentNodeUrl,
+  //     },
+  //     json: true,
+  //   };
+  //   const nodeResponse = rp(nodeRequestOption);
+  //   Promise.resolve(nodeResponse).then((response) => {
+  //     // consensus algorithm
+  //     // every time a nodee stated, consensus algortihem triggered
+  //     const nodeConsensus = {
+  //       uri: currentNodeUrl + "/consensus",
+  //       method: "get",
+  //       json: true,
+  //     };
+  //     const nodeConsensusResponse = rp(nodeConsensus);
+  //     Promise.resolve(nodeConsensusResponse).then((response) => {
+  //       // console.log(response);
+  //       //
+  //     });
+  //     console.log(response);
+  //   });
+  // }
 }
 
 module.exports = SynchronizeNodes;
-
-// axios({
-//   method: "post",
-//   url: "/user/12345",
-//   data: {
-//     firstName: "Fred",
-//     lastName: "Flintstone",
-//   },
-// });
