@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "node_1": "nodemon --watch dev -e js app.js 3001 http://192.168.1.94:3001",
     "node_2": "nodemon --watch dev -e js app.js 3002 http://192.168.1.100:3002",
-    "node_3": "nodemon --watch dev -e js app.js 3003 http://192.168.1.94:3003",
+    "node_3": "nodemon --watch dev -e js app.js 3003 http://192.168.1.95:3003",
     "node_4": "nodemon --watch dev -e js app.js 3004 http://localhost:3004",
     "node_5": "nodemon --watch dev -e js app.js 3005 http://localhost:3005",
     "node_6": "nodemon --watch dev -e js app.js 3006 http://localhost:3006",
