@@ -37,6 +37,7 @@ const Manage = () => {
                 <th>Name</th>
                 <th>Address</th>
                 <th>Social Number</th>
+                <th>Phone Number</th>
                 <th>Category</th>
                 <th>Action</th>
               </tr>
@@ -57,6 +58,7 @@ const Manage = () => {
                 <th>Name</th>
                 <th>Address</th>
                 <th>Social Number</th>
+                <th>Phone Number</th>
                 <th>Action</th>
               </tr>
             </thead>

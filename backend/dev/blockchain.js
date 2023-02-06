@@ -4,12 +4,14 @@ const { v4: uuidv4 } = require("uuid");
 
 // defining blockcahin structure
 function Blockchain() {
-  this.chain = [];
-  this.pendingTransactions = [];
-  this.createNewBlock(100, "0", "0");
-  this.currentNodeUrl = currentNodeUrl;
-  this.networkNodes = [];
+  this.chain = []; // store chain of blocks
+  this.pendingTransactions = []; // store pending transactions
+  this.createNewBlock(100, "0", "0"); // default parameters for genesis block
+  this.currentNodeUrl = currentNodeUrl; // store current node url
+  this.networkNodes = []; // store url of all the connected nodes in the netwrok
 }
+
+// create a new block (nonce, previousBlockHash, hash)
 Blockchain.prototype.createNewBlock = function (
   nonce,
   previousBlockHash,
@@ -28,11 +30,13 @@ Blockchain.prototype.createNewBlock = function (
   return newBlock;
 };
 
+
+// returns last block 
 Blockchain.prototype.getLastBlock = function () {
   return this.chain[this.chain.length - 1];
 };
 
-//refactoring createTransaction
+// create a transaction
 Blockchain.prototype.createNewTransaction = function (
   name,
   category,
@@ -52,6 +56,7 @@ Blockchain.prototype.createNewTransaction = function (
   return newTransaction;
 };
 
+// push transaction into pendingTransactions 
 Blockchain.prototype.addTransactionToPendingTransactions = function (
   transactionObj
 ) {
@@ -59,6 +64,7 @@ Blockchain.prototype.addTransactionToPendingTransactions = function (
   return this.getLastBlock()["index"] + 1;
 };
 
+// create a block hash (previousBlockHash, currentBlockData, nonce)
 Blockchain.prototype.hashBlock = function (
   previousBlockHash,
   currentBlockData,
@@ -70,6 +76,7 @@ Blockchain.prototype.hashBlock = function (
   return hash;
 };
 
+// generate nonce as proof of work token
 Blockchain.prototype.proofOfWork = function (
   previousBlockHash,
   currentBlockData
@@ -83,6 +90,7 @@ Blockchain.prototype.proofOfWork = function (
   return nonce;
 };
 
+// implement consensus algorithem (longest chain rule)
 Blockchain.prototype.chainIsValid = function (blockchain) {
   let validChain = true; //flag
   for (var i = 1; i < blockchain.length; i++) {
@@ -149,52 +157,6 @@ Blockchain.prototype.voteCount = function (
     name: name,
     candidate: candidate,
     category: category,
-  };
-};
-
-// block explorer
-Blockchain.prototype.getBlock = function (blockHash) {
-  let correctBlock = null;
-  this.chain.forEach((block) => {
-    if (block.hash === blockHash) correctBlock = block;
-  });
-  return correctBlock;
-};
-
-Blockchain.prototype.getTransaction = function (transactionId) {
-  let correctTransaction = null;
-  let correctBlock = null;
-  this.chain.forEach((block) => {
-    block.transactions.forEach((transaction) => {
-      if (transaction.transactionId === transactionId) {
-        correctTransaction = transaction;
-        correctBlock = block;
-      }
-    });
-  });
-  return {
-    transaction: correctTransaction,
-    block: correctBlock,
-  };
-};
-
-Blockchain.prototype.getAddressData = function (address) {
-  const addressTransactions = [];
-  this.chain.forEach((block) => {
-    block.transactions.forEach((transaction) => {
-      if (transaction.sender === address || transaction.recipient === address) {
-        addressTransactions.push(transaction);
-      }
-    });
-  });
-  let balance = 0;
-  addressTransactions.forEach((transaction) => {
-    if (transaction.recipient === address) balance += transaction.amount;
-    else if (transaction.sender === address) balance -= transaction.amount;
-  });
-  return {
-    addressTransaction: addressTransactions,
-    addressBalance: balance,
   };
 };
 

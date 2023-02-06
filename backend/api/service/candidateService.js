@@ -3,8 +3,15 @@ const pool = require("../../config/database");
 module.exports = {
   createCandidate: (data, callBack = () => {}) => {
     pool.query(
-      `INSERT INTO candidate (name, address, social_number, c_id, category) VALUES(?,?,?,?,?)`,
-      [data.name, data.address, data.social_number, data.c_id, data.category],
+      `INSERT INTO candidate (name, address, social_number, phone, c_id, category) VALUES(?,?,?,?,?,?)`,
+      [
+        data.name,
+        data.address,
+        data.social_number,
+        data.phone,
+        data.c_id,
+        data.category,
+      ],
       (error, results, fields) => {
         if (error) {
           callBack(error);
@@ -56,5 +63,5 @@ module.exports = {
         return callBack(null, results[0]);
       }
     );
-  }
+  },
 };

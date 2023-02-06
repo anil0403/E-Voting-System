@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = 'http://192.168.1.94:3001';
+const baseUrl = "http://192.168.0.117:3001";
 // get all candidate details (get request)
 export const GetCandidate = async () => {
   return await axios({
@@ -35,16 +35,13 @@ export const GetVoter = async () => {
 };
 
 // Get voter by social number
-export const GetVoterBySocialNumber = async (para) => {
-  return axios({
+export const GetVoterBySocialNumber = async (socialNumber) => {
+  return await axios({
     method: "get",
-    url: baseUrl + `/get-voter-by-socialNumber`,
-    params: {
-      social_number: para,
-    },
+    url: `http://192.168.0.117:3001/get-voter-by-socialNumber/${socialNumber}`,
     responseType: "json",
   }).then((response) => {
-    return response.dada.data;
+    return response.data.data;
   });
 };
 
@@ -66,6 +63,7 @@ export const AddCandidate = async (
   newName,
   newAddress,
   newSocialNumber,
+  phoneNumber,
   category
 ) => {
   return await axios({
@@ -75,6 +73,7 @@ export const AddCandidate = async (
       name: newName,
       address: newAddress,
       social_number: newSocialNumber,
+      phone: phoneNumber,
       category: category,
     },
   }).then((response) => {
@@ -83,7 +82,12 @@ export const AddCandidate = async (
 };
 
 // add Voter (post request)
-export const AddVoter = async (newName, newAddress, newSocialNumber) => {
+export const AddVoter = async (
+  newName,
+  newAddress,
+  newSocialNumber,
+  phoneNumber
+) => {
   return await axios({
     method: "post",
     url: baseUrl + "/create-voter",
@@ -91,6 +95,7 @@ export const AddVoter = async (newName, newAddress, newSocialNumber) => {
       name: newName,
       address: newAddress,
       social_number: newSocialNumber,
+      phone: phoneNumber,
     },
   }).then((response) => {
     return response;

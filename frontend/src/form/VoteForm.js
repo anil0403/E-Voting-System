@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Form from "../components/vote/Form";
-import { GetCategory, CreateTransaction, UpdateVoter } from "../api/ApiHandler";
+import {
+  GetCategory,
+  CreateTransaction,
+  UpdateVoter,
+  GetVoterBySocialNumber,
+} from "../api/ApiHandler";
+import axios from "axios";
 const VoteForm = () => {
   const [buttonState, setButtomState] = useState(false);
   const [socialNumber, setsocialNumber] = useState("");
@@ -30,13 +35,15 @@ const VoteForm = () => {
   const [id, setId] = useState(null);
   const socialNumberHandler = (event) => {
     setsocialNumber(event.target.value);
+    console.log(event.target.value);
     axios({
       method: "get",
-      url: `http://192.168.1.94:3001/get-voter-by-socialNumber/${event.target.value}`,
+      url: `http://192.168.0.117:3001/get-voter-by-socialNumber/${event.target.value}`,
       responseType: "json",
     }).then((response) => {
       try {
         const voterData = response.data.data;
+        // console.log(data);
         const social_number = voterData[0].social_number;
         const flag = voterData[0].flag;
         if (social_number === Number(event.target.value)) {
@@ -89,7 +96,7 @@ const VoteForm = () => {
         />
       ))}
       <div className="form-item">
-        <label for="">Enter Social Number</label>
+        <label for="">Enter Voter Id</label>
         <input
           type="number"
           onChange={socialNumberHandler}

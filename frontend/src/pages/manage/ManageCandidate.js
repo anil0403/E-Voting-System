@@ -17,6 +17,7 @@ const ManageCandidate = () => {
       name={item.name}
       address={item.address}
       social_number={item.social_number}
+      phoneNumber = {item.phone}
       category={item.category}
     />
   ));

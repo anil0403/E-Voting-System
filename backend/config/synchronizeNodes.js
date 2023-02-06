@@ -36,16 +36,9 @@ function SynchronizeNodes() {
   //   });
   // })
 
-
-
-
-
-
-
-
-  if (currentNodeUrl != "http://192.168.1.94:3001") {
+  if (currentNodeUrl != "http://192.168.0.117:3001") {
     const nodeRequestOption = {
-      uri: "http://192.168.1.94:3001" + "/register-and-broadcast-node",
+      uri: "http://192.168.0.117:3001" + "/register-and-broadcast-node",
       method: "post",
       body: {
         newNodeUrl: currentNodeUrl,

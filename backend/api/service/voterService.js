@@ -3,8 +3,8 @@ const pool = require("../../config/database");
 module.exports = {
   createVoter: (data, callBack = () => {}) => {
     pool.query(
-      `INSERT INTO voter (name, address, social_number, v_id) VALUES(?,?,?,?)`,
-      [data.name, data.address, data.social_number, data.v_id],
+      `INSERT INTO voter (name, address, social_number, phone, v_id) VALUES(?,?,?,?,?)`,
+      [data.name, data.address, data.social_number, data.phone, data.v_id],
       (error, results, fields) => {
         if (error) {
           callBack(error);

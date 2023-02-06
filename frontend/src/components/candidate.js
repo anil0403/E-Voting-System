@@ -15,6 +15,7 @@ const Candidate = (props) => {
       <td>{props.name}</td>
       <td>{props.address}</td>
       <td>{props.social_number}</td>
+      <td>{props.phoneNumber}</td>
       <td>{props.category}</td>
       <td>
         <form onSubmit={deleteHandler}>

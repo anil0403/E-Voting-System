@@ -13,6 +13,7 @@ const CandidateForm = () => {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [social_number, setSocial_number] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [category, setCategory] = useState("");
   const nameHandler = (event) => {
     setName(event.target.value);
@@ -23,20 +24,26 @@ const CandidateForm = () => {
   const social_numberHandler = (event) => {
     setSocial_number(event.target.value);
   };
+  const phoneNumberHandler = (event) => {
+    setPhoneNumber(event.target.value);
+  };
   const categoryHandler = (event) => {
     setCategory(event.target.value);
   };
   const submitHandler = (event) => {
     // event.preventDefault();
-    AddCandidate(name, address, social_number, category).then((response) => {
-      console.log(response);
-    });
-    AddVoter(name, address, social_number).then((response) => {
+    AddCandidate(name, address, social_number, phoneNumber, category).then(
+      (response) => {
+        console.log(response);
+      }
+    );
+    AddVoter(name, address, social_number, phoneNumber).then((response) => {
       console.log(response);
     });
     setName("");
     setAddress("");
     setSocial_number("");
+    setPhoneNumber("");
   };
   return (
     <form onSubmit={submitHandler} className="form">
@@ -67,6 +74,16 @@ const CandidateForm = () => {
           value={social_number}
           type="number"
           placeholder="Enter your citizenship/nid id"
+          required
+        />
+      </div>
+      <div className="form-item">
+        <label for="name">Phone Number</label>
+        <input
+          onChange={phoneNumberHandler}
+          value={phoneNumber}
+          type="number"
+          placeholder="98/7 xxxxxxxx"
           required
         />
       </div>

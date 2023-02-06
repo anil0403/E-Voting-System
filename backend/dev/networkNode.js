@@ -4,19 +4,19 @@ const coin = new Blockchain();
 const rp = require("request-promise");
 const { response } = require("express");
 var express = require("express");
-const { json } = require("body-parser");
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-const axios = require("axios");
-const { get } = require("request-promise");
 
 //creating blockchain endpoint
 
 module.exports = {
+  // return entire  blockchain data
   getBlockchain: (callBack = () => {}) => {
     return callBack(null, coin);
   },
+
+  // create transaction and add transaction to pendingTransactions
   transaction: (data, callBack = () => {}) => {
     const newTransaction = data;
     const blockIndex = coin.addTransactionToPendingTransactions(newTransaction);
@@ -24,6 +24,8 @@ module.exports = {
       note: `Transaction will be added in block ${blockIndex}`,
     });
   },
+
+  // broadcast transaction to all over the network
   transactionBroadcast: (data, callBack = () => {}) => {
     const requestPromises = [];
     data.forEach((item) => {
@@ -47,6 +49,7 @@ module.exports = {
         requestPromises.push(rp(requestOptions));
       });
     });
+
     // mining
     // http://localhost:3001/mine
     const mineRequestPromises = [];
@@ -66,6 +69,8 @@ module.exports = {
       });
     });
   },
+
+  // mine a block
   mine: (callBack = () => {}) => {
     const lastBlock = coin.getLastBlock();
     const previousBlockHash = lastBlock["hash"];
@@ -99,6 +104,8 @@ module.exports = {
       });
     });
   },
+
+  // the nodes present in the network recieve newblock and push into their chain
   receiveNewBlock: (data, callBack = () => {}) => {
     const newBlock = data;
     const lastBlock = coin.getLastBlock();
@@ -118,6 +125,8 @@ module.exports = {
       });
     }
   },
+
+  // the current node recieve new node, register it and broadcast to all the nodes of the network
   registerBroadcast: (newNodeUrl, callBack = () => {}) => {
     if (coin.networkNodes.indexOf(newNodeUrl) == -1)
       coin.networkNodes.push(newNodeUrl);
@@ -149,6 +158,8 @@ module.exports = {
         });
       });
   },
+
+  // all the nodes of the network receive new node, register it and return their details
   registerNode: (newNodeUrl, callBack = () => {}) => {
     const nodeNotAlreadyPresent = coin.networkNodes.indexOf(newNodeUrl) == -1;
     const notCurrentNode = coin.currentNodeUrl !== newNodeUrl;
@@ -158,6 +169,8 @@ module.exports = {
       note: "new node registered successfully",
     });
   },
+
+  // the new node register all the nodes of the network into it
   registerNodesBulk: (allNetworkNodes, callBack = () => {}) => {
     allNetworkNodes.forEach((networkNodeUrl) => {
       const nodeNotAlreadyPresent =
@@ -170,6 +183,8 @@ module.exports = {
       note: "Bulk registration of nodes successful!",
     });
   },
+
+  // implement consensus algorithm (longest chain rule)
   consensus: (callBack = () => {}) => {
     const requestPromises = [];
     coin.networkNodes.forEach((networkNodeUrl) => {
@@ -216,6 +231,8 @@ module.exports = {
       }
     });
   },
+
+  // count total votes of each candidte
   countVote: async (callBack = () => {}) => {
     // implmementing consensus algorithm
     const nodeConsensus = {
@@ -225,7 +242,7 @@ module.exports = {
     };
     const nodeConsensusResponse = rp(nodeConsensus);
     Promise.resolve(nodeConsensusResponse).then((response) => {
-      // console.log(response);
+      console.log(response);
       //
     });
 
